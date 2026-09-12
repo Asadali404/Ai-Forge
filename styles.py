@@ -1,17 +1,18 @@
-"""Visual theme for InterviewForge AI — an ironworks / forge motif.
+"""Visual theme for InterviewForge AI — a bright, high-contrast ironworks
+motif (warm paper background, dark ink text, ember/gold accents).
 
 Palette:
-  iron-900  #1B1815   warm near-black background
-  iron-800  #26221D   panel background
-  iron-700  #362D23   card borders / chips
-  ash-100   #F3EEE4   primary text / cream
-  ash-300   #CDC3B3   secondary text
+  paper     #FBF7F1   page background (warm off-white)
+  panel     #FFFFFF   card / sidebar background
+  line      #E7DCC9   borders
+  ink-900   #241C15   primary text (near-black, warm)
+  ink-600   #6E6255   secondary / muted text
   ember     #E8622C   primary accent (hot metal)
-  gold      #E8A93A   secondary accent (spark / highlight)
-  slate     #9AA3A0   muted steel for labels
-  good/warn/bad        semantic colors used ONLY for score bands, so a
-                       reading is never conveyed by color alone (a text
-                       label always sits next to it too)
+  ember-dk  #B8481C   accent text on light backgrounds (better contrast)
+  gold      #C9891B   secondary accent, tuned darker for legibility on white
+  good/warn/bad        semantic colors for score bands, tuned for light bg —
+                       a text label always sits next to the color so a
+                       reading is never conveyed by color alone
 Typography: Space Grotesk for headings (geometric, industrial),
 IBM Plex Sans for body copy — a deliberate pairing, not the default
 Streamlit sans-serif.
@@ -37,18 +38,17 @@ FORGE_CSS = """
 
 <style>
 :root {
-  --iron-900: #1B1815;
-  --iron-800: #262019;
-  --iron-700: #362D23;
-  --ash-100: #F3EEE4;
-  --ash-300: #CDC3B3;
+  --paper: #FBF7F1;
+  --panel: #FFFFFF;
+  --line: #E7DCC9;
+  --ink-900: #241C15;
+  --ink-600: #6E6255;
   --ember: #E8622C;
-  --ember-dim: #B84A1E;
-  --gold: #E8A93A;
-  --slate: #9AA3A0;
-  --good: #7CB68A;
-  --warn: #E8A93A;
-  --bad: #DD6B5B;
+  --ember-dk: #B8481C;
+  --gold: #C9891B;
+  --good: #2E8B57;
+  --warn: #B9800E;
+  --bad: #C0392B;
 }
 
 html, body, [class*="css"]  {
@@ -58,20 +58,20 @@ html, body, [class*="css"]  {
 
 .stApp {
   background:
-    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(232,98,44,0.12), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(232,169,58,0.07), transparent 55%),
-    var(--iron-900);
-  color: var(--ash-100);
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(232,98,44,0.07), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 0%, rgba(201,137,27,0.06), transparent 55%),
+    var(--paper);
+  color: var(--ink-900);
 }
 
 h1, h2, h3, h4 {
   font-family: 'Space Grotesk', sans-serif !important;
-  color: var(--ash-100) !important;
+  color: var(--ink-900) !important;
   letter-spacing: -0.01em;
 }
 h3 { display: flex; align-items: center; gap: 10px; }
 
-p, li, span, label, div { line-height: 1.55; }
+p, li, span, label, div { line-height: 1.55; color: var(--ink-900); }
 
 /* ---------------------------------------------------------------- */
 /* Hero title bar                                                    */
@@ -80,24 +80,23 @@ p, li, span, label, div { line-height: 1.55; }
   display: flex;
   align-items: center;
   gap: 16px;
-  border-bottom: 1px solid var(--iron-700);
+  border-bottom: 2px solid var(--line);
   padding-bottom: 18px;
   margin-bottom: 4px;
 }
 .forge-hero .anvil {
   font-size: 2.3rem;
   line-height: 1;
-  filter: drop-shadow(0 0 10px rgba(232,98,44,0.45));
 }
 .forge-hero h1 {
   font-size: 2.1rem !important;
   margin: 0 !important;
-  background: linear-gradient(90deg, var(--ash-100) 25%, var(--ember) 100%);
+  background: linear-gradient(90deg, var(--ink-900) 15%, var(--ember) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .forge-tagline {
-  color: var(--slate);
+  color: var(--ink-600);
   font-size: 0.97rem;
   margin-top: -6px;
   margin-bottom: 14px;
@@ -108,12 +107,12 @@ p, li, span, label, div { line-height: 1.55; }
   display: flex;
   justify-content: space-between;
   font-size: 0.82rem;
-  color: var(--slate);
+  color: var(--ink-600);
   margin-bottom: 4px;
 }
-.forge-progress-label b { color: var(--gold); font-family: 'Space Grotesk', sans-serif; }
+.forge-progress-label b { color: var(--ember-dk); font-family: 'Space Grotesk', sans-serif; }
 div[data-testid="stProgress"] > div > div {
-  background-color: var(--iron-700) !important;
+  background-color: var(--line) !important;
 }
 div[data-testid="stProgress"] > div > div > div {
   background-image: linear-gradient(90deg, var(--ember), var(--gold)) !important;
@@ -141,41 +140,42 @@ div[data-testid="stProgress"] > div > div > div {
   font-family: 'Space Grotesk', sans-serif;
   flex-shrink: 0;
 }
-.stage-current { background: rgba(232,98,44,0.16); border: 1px solid rgba(232,98,44,0.35); }
-.stage-current .num { background: var(--ember); color: #1B1815; font-weight: 700; }
-.stage-current span.label { color: var(--ash-100); font-weight: 600; }
-.stage-done .num { background: var(--iron-700); color: var(--gold); border: 1px solid var(--gold); }
-.stage-done span.label { color: var(--ash-300); }
-.stage-todo .num { background: var(--iron-700); color: var(--slate); }
-.stage-todo span.label { color: var(--slate); }
+.stage-current { background: rgba(232,98,44,0.12); border: 1px solid rgba(232,98,44,0.30); }
+.stage-current .num { background: var(--ember); color: #FFFFFF; font-weight: 700; }
+.stage-current span.label { color: var(--ink-900); font-weight: 600; }
+.stage-done .num { background: #FFF3E6; color: var(--gold); border: 1px solid var(--gold); }
+.stage-done span.label { color: var(--ink-600); }
+.stage-todo .num { background: var(--line); color: var(--ink-600); }
+.stage-todo span.label { color: var(--ink-600); }
 
 /* ---------------------------------------------------------------- */
 /* Cards                                                             */
 /* ---------------------------------------------------------------- */
 .forge-card {
-  background: linear-gradient(180deg, var(--iron-800), var(--iron-800) 96%);
-  border: 1px solid var(--iron-700);
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-left: 4px solid var(--ember);
   border-radius: 12px;
   padding: 16px 20px;
   margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(36,28,21,0.06);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .forge-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+  box-shadow: 0 10px 24px rgba(36,28,21,0.10);
 }
 .forge-card h4 {
   margin-top: 0 !important;
   font-size: 1.05rem !important;
   display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
 }
-.forge-card p, .forge-card li { color: var(--ash-100); }
-.forge-card b, .forge-card strong { color: var(--gold); font-weight: 600; }
-.forge-card em { color: var(--ash-300); }
+.forge-card p, .forge-card li { color: var(--ink-900); }
+.forge-card b, .forge-card strong { color: var(--ember-dk); font-weight: 600; }
+.forge-card em { color: var(--ink-600); }
 .forge-card ul { margin: 4px 0 10px 0; padding-left: 20px; }
 .forge-card.gold { border-left-color: var(--gold); }
-.forge-card.slate { border-left-color: var(--slate); }
+.forge-card.slate { border-left-color: var(--ink-600); }
 .forge-card.good { border-left-color: var(--good); }
 .forge-card.bad { border-left-color: var(--bad); }
 
@@ -192,20 +192,21 @@ div[data-testid="stProgress"] > div > div > div {
   margin-left: 8px;
   vertical-align: middle;
 }
-.chip-high { background: rgba(232,98,44,0.20); color: var(--ember); border: 1px solid var(--ember-dim); }
-.chip-medium { background: rgba(232,169,58,0.20); color: var(--gold); border: 1px solid var(--gold); }
-.chip-low { background: rgba(154,163,160,0.20); color: var(--slate); border: 1px solid var(--slate); }
+.chip-high { background: #FDEBE1; color: var(--ember-dk); border: 1px solid var(--ember-dk); }
+.chip-medium { background: #FBF0DA; color: var(--gold); border: 1px solid var(--gold); }
+.chip-low { background: #EFEBE5; color: var(--ink-600); border: 1px solid var(--ink-600); }
 
 /* ---------------------------------------------------------------- */
 /* Score blocks                                                      */
 /* ---------------------------------------------------------------- */
 .score-block {
   text-align: center;
-  background: var(--iron-800);
-  border: 1px solid var(--iron-700);
-  border-top: 4px solid var(--slate);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--ink-600);
   border-radius: 14px;
   padding: 20px 10px 16px;
+  box-shadow: 0 1px 3px rgba(36,28,21,0.06);
   transition: transform 0.15s ease;
 }
 .score-block:hover { transform: translateY(-2px); }
@@ -223,7 +224,7 @@ div[data-testid="stProgress"] > div > div > div {
 }
 .score-block .label {
   font-size: 0.8rem;
-  color: var(--slate);
+  color: var(--ink-600);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-top: 6px;
@@ -234,23 +235,23 @@ div[data-testid="stProgress"] > div > div > div {
 /* ---------------------------------------------------------------- */
 div.stButton > button, div.stDownloadButton > button {
   background: var(--ember);
-  color: #1B1815;
+  color: #FFFFFF;
   border: none;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   border-radius: 22px;
   padding: 0.55em 1.3em;
-  box-shadow: 0 2px 10px rgba(232,98,44,0.25);
+  box-shadow: 0 2px 8px rgba(232,98,44,0.30);
   transition: transform 0.12s ease, background 0.12s ease;
 }
 div.stButton > button:hover, div.stDownloadButton > button:hover {
-  background: var(--gold);
-  color: #1B1815;
+  background: var(--ember-dk);
+  color: #FFFFFF;
   transform: translateY(-1px);
 }
 div.stButton > button:disabled {
-  background: var(--iron-700);
-  color: var(--slate);
+  background: var(--line);
+  color: var(--ink-600);
   box-shadow: none;
 }
 
@@ -259,32 +260,32 @@ div.stButton > button:disabled {
 /* ---------------------------------------------------------------- */
 button[data-baseweb="tab"] {
   font-family: 'Space Grotesk', sans-serif;
-  color: var(--slate) !important;
+  color: var(--ink-600) !important;
 }
 button[data-baseweb="tab"][aria-selected="true"] {
-  color: var(--ember) !important;
+  color: var(--ember-dk) !important;
   border-bottom-color: var(--ember) !important;
 }
 div[data-testid="stExpander"] {
-  border: 1px solid var(--iron-700) !important;
+  border: 1px solid var(--line) !important;
   border-radius: 10px !important;
-  background: var(--iron-800);
+  background: var(--panel);
 }
 input, textarea {
-  background-color: var(--iron-800) !important;
-  color: var(--ash-100) !important;
-  border-color: var(--iron-700) !important;
+  background-color: var(--panel) !important;
+  color: var(--ink-900) !important;
+  border-color: var(--line) !important;
 }
 
 section[data-testid="stSidebar"] {
-  background: var(--iron-800);
-  border-right: 1px solid var(--iron-700);
+  background: #F5EEE2;
+  border-right: 1px solid var(--line);
 }
 
-hr { border-color: var(--iron-700) !important; }
+hr { border-color: var(--line) !important; }
 
 /* Small helper text under section headers */
-.forge-caption { color: var(--slate); font-size: 0.88rem; margin-top: -8px; }
+.forge-caption { color: var(--ink-600); font-size: 0.88rem; margin-top: -8px; }
 </style>
 """
 
@@ -337,7 +338,7 @@ def score_band(value):
     try:
         v = float(value)
     except (TypeError, ValueError):
-        return "—", "var(--slate)"
+        return "—", "var(--ink-600)"
     if v >= 75:
         return "Strong", "var(--good)"
     if v >= 50:
